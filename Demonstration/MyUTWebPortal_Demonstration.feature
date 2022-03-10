@@ -11,3 +11,5 @@ Feature: Regression of MyUT Web Portal functionalities
     Then Enter ashaban into UserName
     And Enter Casper_060210 into Password
     Then Click on button Sign in by text
+    And wait for the page to load
+    And Verify that Welcome Anastasia Shabanskaya is present

@@ -7,12 +7,6 @@ def before_all(context):
     context.url = 'http://myut.utoledo.edu/'
 
 
-# def before_feature(context, feature):
-#     context.BASE_URL = f'http://{name}.utoledo.edu/'
-#     # store session id
-#     context.session = datetime.now().strftime('%d%B_%H_%M.%S')
-
-
 def before_scenario(context, scenario):
     context.browser = webdriver.Chrome()
     context.browser.implicitly_wait(15)
@@ -31,8 +25,3 @@ def after_scenario(context, scenario):
     context.browser.close()
     context.browser.quit()
 
-
-# def close_all_tabs_but_first(context):
-#     while len(context.browser.window_handles) > 1:
-#         context.browser.close()
-#         context.browser.switch_to.window(context.browser.window_handles[-1])

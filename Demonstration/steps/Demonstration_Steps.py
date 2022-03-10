@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from behave import step
-from Demonstration.classes.MyClass import MyClass
+from Demonstration.classes.MyClass import *
 
 @step('Navigate to "myut"')
 def browser_navigation(context):
@@ -15,25 +15,31 @@ def browser_navigation(context):
 
 @step('wait for the page to load')
 def step_impl(context):
-    WebDriverWait(context.browser, 10).until(
-        EC.visibility_of_all_elements_located((By.XPATH, "//li[@class='login_links_item']/a[@id='log_btn']")),
-        message='Not all elements are visible')
+    module = MyClassLoginLinks(context.browser)
+    module.login_links_in_header()
+
+@step('Verify that {text} is present')
+def step_impl(context, text):
+    module = MyClassLoginLinks(context.browser)
+    module.get_login_link_by_text(text)
+
+
 
 
 @step('Click on button {name} by text in header')
 def step_impl(context, name):
-    module = MyClass(context.browser)
+    module = MyClassHeader(context.browser)
     module.click_the_button_in_header(name)
 
 
 @step('Click on button {name} by text')
 def step_impl(context, name):
-    module = MyClass(context.browser)
+    module = MyClassHeader(context.browser)
     module.click_the_button(name)
 
 @step('Enter {text} into {name}')
 def step_impl(context, text, name):
-    module = MyClass(context.browser)
+    module = MyClassHeader(context.browser)
     element = module.get_user_name(name)
     ActionChains(context.browser).move_to_element(element).\
         click(on_element=element).send_keys(text).perform()
