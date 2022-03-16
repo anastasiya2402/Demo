@@ -12,7 +12,7 @@ tags=""
 name=""
 
 # check that filepath is provided in the first positional argument
-if [ -z "$1" ] || [[ "$1" == *"--"* ]];
+if [ -z "$1" ] || [ "$1" == *"--"* ];
 then echo "Path to test files has not been provided"; exit 1;
 else filepath=$1; echo "Test / Tests Set to execute: $filepath"; shift;
 fi
