@@ -81,6 +81,9 @@ RUN pip3 install --upgrade google-api-python-client google-auth-httplib2 google-
 # Chrome browser to run the tests
 RUN echo 'Create directory for browsers' \
     && mkdir -p /usr/share/desktop-directories \
+    && chown newuser /usr/share/desktop-directories \
+    && USER newuser \
+    && WORKDIR /usr/share/desktop-directories \
     && echo 'Get the latest stable Chrome' \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt-get install ./google-chrome*.deb --yes
