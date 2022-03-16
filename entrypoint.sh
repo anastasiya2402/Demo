@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # start virtual display server
 export DISPLAY=:20
@@ -6,13 +6,15 @@ Xvfb :20 -screen 0 1366x768x16 &
 # x11vnc -passwd secret -display :20 -N -forever &
 
 # set default values
+# shellcheck disable=SC2034
 environment="qa"
 filepath=""
 tags=""
 name=""
 
 # check that filepath is provided in the first positional argument
-if [ -z "$1" ] || [ "$1" == *"--"* ];
+# shellcheck disable=SC2081
+if [ -z "$1" ] || [ "$1" = *"--"* ];
 then echo "Path to test files has not been provided"; exit 1;
 else filepath=$1; echo "Test / Tests Set to execute: $filepath"; shift;
 fi
@@ -20,10 +22,11 @@ fi
 # parse all params matching "--param_name value"
 # and set param_name=value
 while [ $# -gt 0 ]; do
-  if [[ $1 == *"--"* ]];
+  # shellcheck disable=SC2039
+  if [[ $1 = *"--"* ]];
     then
       param="${1/--/}"
-      declare $param="$2"
+      declare "$param"="$2"
   fi
   shift
 done
@@ -40,7 +43,7 @@ then
 	cmd="$cmd --name=\"$name\""
 fi
 # execute behave command; always return success
-eval $cmd || :
+eval "$cmd" || :
 
 # fire status 0 no matter of test results
 exit
