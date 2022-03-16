@@ -79,12 +79,12 @@ ENV ORACLE_HOME="/opt/oracle/instantclient_21_5"
 RUN pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
 
-# Chrome browser to run the tests
-RUN echo 'Create directory for browsers' \
-    && mkdir -p /usr/share/desktop-directories \
-    && echo 'Get the latest stable Chrome' \
-    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt install -y ./google-chrome-stable_current_amd64.deb
+## Chrome browser to run the tests
+#RUN echo 'Create directory for browsers' \
+#    && mkdir -p /usr/share/desktop-directories \
+#    && echo 'Get the latest stable Chrome' \
+#    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+#    && apt install -y ./google-chrome-stable_current_amd64.deb
 
 # Disable the SUID sandbox so that chrome can launch without being in a privileged container
 RUN dpkg-divert --add --rename --divert /opt/google/chrome/google-chrome.real /opt/google/chrome/google-chrome \
