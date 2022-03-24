@@ -1,27 +1,27 @@
-from selenium import webdriver
-import re
+from Demonstration.Base import BaseUIEnvironment
 from datetime import datetime
 
 
-def before_all(context):
+def before_feature(context, feature):
+    # Parent inheritance
+    BaseUIEnvironment.before_feature(context, feature)
+
     context.url = 'http://myut.utoledo.edu/'
+
+    # store session id
+    context.session = datetime.now().strftime('%d%B_%H_%M.%S')
+
+
+def after_feature(context, feature):
+    # Parent inheritance
+    BaseUIEnvironment.after_feature(context, feature)
 
 
 def before_scenario(context, scenario):
-    context.browser = webdriver.Chrome()
-    context.browser.implicitly_wait(15)
-    context.browser.maximize_window()
-    context.browser.delete_all_cookies()
-
-
-def after_step(context, step):
-    if step.status == 'failed':
-        step_name = re.sub('[^a-zA-Z0-9 \n\.]', '', step.name)
-        print(step.name)
-        context.browser.save_screenshot(f'{step_name}.png')
+    BaseUIEnvironment.before_scenario(context, scenario)
 
 
 def after_scenario(context, scenario):
-    context.browser.close()
-    context.browser.quit()
+    BaseUIEnvironment.after_scenario(context, scenario)
+
 
