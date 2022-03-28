@@ -1,3 +1,4 @@
+import webbrowser
 from time import sleep
 
 from selenium.webdriver import ActionChains
@@ -8,11 +9,29 @@ from selenium.webdriver.common.by import By
 from behave import step
 from Demonstration.classes.MyClass import *
 from Tables_and_Dictionaries import BehaveSupport
+from Demonstration.Base import BaseUIEnvironment
+import logging
+
+logger = logging.getLogger('master')
 
 
 @step('Navigate to "myut"')
 def browser_navigation(context):
     context.browser.get(context.url)
+
+
+
+@step('Navigate to "{url}"')
+def browser_navigation(context, url):
+    """
+      Base web navigation
+
+      :param url:  either actual url we want go to
+      """
+
+    url = '/'.join([BehaveSupport.replace_values_by_context(context, path).strip('/') for path in url.split('/')])
+    logger.debug(f'Navigating to {url}')
+    context.browser.get(url)
 
 
 @step('wait for the page to load')

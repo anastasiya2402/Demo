@@ -3,6 +3,7 @@ Feature: Regression of MyUT Web Portal functionalities
 
   Background: Login to MyUT Web Portal
     Given Navigate to "myut"
+#   Given Navigate to "context.url"
     And wait for the page to load
 
 

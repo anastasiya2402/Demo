@@ -1,6 +1,8 @@
 FROM ubuntu
 MAINTAINER Anastasia
 
+#USER root
+
 # set noninteractive installation
 RUN export DEBIAN_FRONTEND=noninteractive
 
@@ -28,7 +30,6 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     xclip \
     libaio1
-
 # Fix Java certificate issues
 RUN apt-get update && \
     apt-get install ca-certificates-java && \
@@ -92,11 +93,14 @@ RUN dpkg-divert --add --rename --divert /opt/google/chrome/google-chrome.real /o
     && chmod 755 /opt/google/chrome/google-chrome
 
 # Chrome Driver
+#ENV PANTHER_NO_SANDBOX 1
+#ENV PANTHER_CHROME_ARGUMENTS='--headless --no-sandbox --disable-infobars --disable-dev-shm-usage --disable-gpu --disable-extensions --remote-debugging-port=9222'e
 RUN echo 'Pull appropriate chromedriver' \
     && CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE` \
 	&& mkdir -p /opt/selenium \
     && curl https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -o /opt/selenium/chromedriver_linux64.zip \
     && cd /opt/selenium; unzip /opt/selenium/chromedriver_linux64.zip; rm -rf chromedriver_linux64.zip; ln -fs /opt/selenium/chromedriver /usr/local/bin/chromedriver;
+
 
 # set a virtual display
 ENV DISPLAY :20
@@ -109,9 +113,9 @@ RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
 RUN apt-get install -y unixodbc-dev
 
 
-RUN mkdir advisor
+RUN mkdir myUT
 # Set working directory
-WORKDIR /advisor
+WORKDIR /myUT
 # install Project dependancies
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
@@ -121,8 +125,8 @@ COPY . ./
 RUN mkdir junit_reports
 
 # Provide read, write and execute permissions for entrypoint.sh and also take care of '\r' error which raised when someone uses notepad or note++ for editing in Windows.
-RUN chmod 755 /advisor/entrypoint.sh \
-    && sed -i 's/\r$//' /advisor/entrypoint.sh
+RUN chmod 755 /myUT/entrypoint.sh \
+    && sed -i 's/\r$//' /myUT/entrypoint.sh
 
 #Expose port 5920 to view display using VNC Viewer
 EXPOSE 5920
@@ -130,5 +134,7 @@ EXPOSE 5920
 #Expose port 5000 for Flask callback server
 EXPOSE 5000
 
+#USER 1200
 #Execute entrypoint.sh at start of container
-ENTRYPOINT ["/advisor/entrypoint.sh"]
+ENTRYPOINT ["/myUT/entrypoint.sh"]
+
