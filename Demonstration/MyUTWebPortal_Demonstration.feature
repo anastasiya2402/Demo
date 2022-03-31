@@ -5,15 +5,16 @@ Feature: Regression of MyUT Web Portal functionalities
     Given Navigate to "myut"
 #   Given Navigate to "context.url"
     And wait for the page to load
-
-
-  Scenario: Login with Valid credentials - Happy Path
-    Given Click on button Login by text in header
+    And Click on button Login by text in header
     Then Enter ashaban into UserName
     And Enter Casper_060210 into Password
     Then Click on button Sign in by text
     And wait for the page to load
-    And Verify that Welcome Anastasia Shabanskaya is present
+
+
+  Scenario: Verification of MyUT Web Portal page
+    Given Verify that Welcome Anastasia Shabanskaya is present
+    And Page title should be "myUT"
     Then Verify that following buttons/links/texts are displayed
       | Field                              | Element_type               |
       | Account Maintenance                | login-elements-in-header   |
@@ -31,3 +32,11 @@ Feature: Regression of MyUT Web Portal functionalities
       | LIBRARY                            | body-data-elements         |
       | UTMC                               | body-data-elements         |
       | UNIVERSITY DIRECTORY               | body-data-elements         |
+
+
+  Scenario: Rockets Email - Logging in with Valid Credentials - Happy Path
+   Given Choose tab "Student"
+   Then Switch to iframe and go to Rockets Email
+   And wait for the page to load
+   And If Stay signed in? is asked, then click button "No" by value
+   Then Verify that SA appears in the upper right corner

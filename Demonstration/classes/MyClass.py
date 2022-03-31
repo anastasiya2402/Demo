@@ -3,7 +3,8 @@ from time import sleep
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class MyClassLoginLinks:
 
@@ -33,6 +34,10 @@ class PageBody:
     def get_all_page_body_data(self):
         return self.body.find_elements(by=By.XPATH, value=".//ul/li")
 
+    def get_body_data_by_text(self, text):
+        return self.body.find_element(by=By.XPATH, value=f".//ul/li[starts-with(@class,'gtm_portal_tab') and "
+                                                         f"starts-with(text(),'{text}')]")
+
 class MyClassHeader:
 
     def __init__(self, driver):
@@ -60,5 +65,45 @@ class LoginArea:
         button = self.login_area.find_element(by=By.XPATH, value=f".//div[@id='submissionArea']/span[text()='{name}']")
         button.click()
         sleep(2)
+
+
+class iFrameRelated:
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def click_link_in_iframe_body(self, text):
+        # finding the iframe element
+        iframe = self.driver.find_element(by=By.XPATH, value="//iframe")
+        self.driver.switch_to.frame(iframe)
+        self.driver.find_element(by=By.XPATH, value=f"//a[text()='{text}']").click()
+        # switching back to the main frame
+        self.driver.switch_to.default_content()
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+
+    def click_the_button_by_value(self, text, name):
+        if self.driver.find_element(by=By.XPATH, value=f"//div[@class='row text-title' and text()='{text}']"):
+            button_by_value = self.driver.find_element(by=By.XPATH, value=f"//input[@type='button' and @value='{name}']")
+            button_by_value.click()
+            sleep(2)
+        else:
+            raise Exception(f'The question {text} should appear')
+
+    def email_box_verification(self, initials):
+        return self.driver.find_element(by=By.XPATH,
+                                        value="//div[@class='_26RadnUT54i3aZm4ePC1Ws']/child::img")
+
+class PageVisibility:
+    def __init__(self, driver):
+        self.driver = driver
+
+    def wait_loading(self):
+        # self.driver.find_element(by=By.XPATH, value="//*[self::ul[@id='login_links_list'] or "
+        #                                             "self::div[@id='formsAuthenticationArea']]")
+        WebDriverWait(self.driver,15).until(EC.presence_of_all_elements_located((By.XPATH,
+        "//*[self::ul[@id='login_links_list'] or self::div[@id='formsAuthenticationArea' or @id='lightbox']]")),
+                                            message='Element has not been found')
+
+
 
 
