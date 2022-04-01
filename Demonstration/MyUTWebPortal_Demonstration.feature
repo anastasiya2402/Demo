@@ -40,3 +40,4 @@ Feature: Regression of MyUT Web Portal functionalities
    And wait for the page to load
    And If Stay signed in? is asked, then click button "No" by value
    Then Verify that SA appears in the upper right corner
+   And Page title should be "Mail - Shabanskaya, Anastasia - Outlook"
