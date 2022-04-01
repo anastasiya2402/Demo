@@ -1,15 +1,6 @@
-import webbrowser
-from time import sleep
-
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 from behave import step
 from Demonstration.classes.MyClass import *
 from Tables_and_Dictionaries import BehaveSupport
-from Demonstration.Base import BaseUIEnvironment
 import logging
 
 logger = logging.getLogger('master')
@@ -18,7 +9,6 @@ logger = logging.getLogger('master')
 @step('Navigate to "myut"')
 def browser_navigation(context):
     context.browser.get(context.url)
-
 
 
 @step('Navigate to "{url}"')
@@ -36,14 +26,27 @@ def browser_navigation(context, url):
 
 @step('wait for the page to load')
 def step_impl(context):
-    module = MyClassLoginLinks(context.browser)
-    module.login_links_in_header()
-
+    # module = MyClassLoginLinks(context.browser)
+    # module.login_links_in_header()
+    module = PageVisibility(context.browser)
+    module.wait_loading()
 
 @step('Verify that {text} is present')
 def step_impl(context, text):
     module = MyClassLoginLinks(context.browser)
     assert text in module.login_links_text(), f"Expected name '{text}' is not present!"
+
+
+@step('Page title should be "{text}"')
+def step_impl(context,text):
+    """
+    Validating the title of the page
+    """
+    page_title = context.browser.title
+    assert text in page_title, f'Title {page_title} is supposed to be {text}.' \
+                               f'Current url: {context.browser.current_url}'
+    print(context.browser.current_url)
+    print(page_title)
 
 
 @step('Click on button {name} by text in header')
@@ -56,6 +59,18 @@ def step_impl(context, name):
 def step_impl(context, name):
     module = LoginArea(context.browser)
     module.click_the_button(name)
+
+
+@step('If {text} is asked, then click button "{name}" by value')
+def step_impl(context, text, name):
+    module = iFrameRelated(context.browser)
+    module.click_the_button_by_value(text, name)
+
+@step('Verify that {initials} appears in the upper right corner')
+def step_impl(context, initials):
+    module = iFrameRelated(context.browser)
+    initials_xpath = module.email_box_verification(initials)
+    assert initials in initials_xpath.get_attribute('alt'), f'{initials} is not shown or incorrect'
 
 
 @step('Enter {text} into {name}')
@@ -161,3 +176,17 @@ def fieldof_type_is_displayed(context):
     # def get_all_checkboxes(self):
     #     return self.find_elements_by_xpath("//label/preceding-sibling::input[@type='checkbox']"
     #                                        "/parent::div[@class='checkbutton']")
+
+@step('Choose tab "{text}"')
+def step_impl(context, text):
+    module = PageBody(context.browser)
+    tab_in_body = module.get_body_data_by_text(text)
+    tab_in_body.click()
+    sleep(2)
+
+@step('Switch to iframe and go to {text}')
+def step_impl(context, text):
+    module = iFrameRelated(context.browser)
+    module.click_link_in_iframe_body(text)
+    sleep(2)
+
