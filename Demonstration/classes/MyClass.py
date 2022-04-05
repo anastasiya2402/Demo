@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 class MyClassLoginLinks:
 
     def __init__(self, driver):
@@ -38,6 +39,7 @@ class PageBody:
         return self.body.find_element(by=By.XPATH, value=f".//ul/li[starts-with(@class,'gtm_portal_tab') and "
                                                          f"starts-with(text(),'{text}')]")
 
+
 class MyClassHeader:
 
     def __init__(self, driver):
@@ -45,7 +47,8 @@ class MyClassHeader:
         self.header = self.driver.find_element(by=By.XPATH, value=".//div[@id='header']")
 
     def click_the_button_in_header(self, name):
-        button = self.header.find_element(by=By.XPATH, value=f".//li[@class='login_links_item']/child::*[text()='{name}']")
+        button = self.header.find_element(by=By.XPATH,
+                                          value=f".//li[@class='login_links_item']/child::*[text()='{name}']")
         button.click()
         sleep(2)
 
@@ -58,7 +61,7 @@ class LoginArea:
 
     def enter_login_credentials(self, name):
         login_credentials = self.login_area.find_element(by=By.XPATH, value=f".//div[@id='formsAuthenticationArea']"
-                                                                  f"/div[@id='userNameArea' or @id='passwordArea']/input[@name='{name}']")
+                                                                            f"/div[@id='userNameArea' or @id='passwordArea']/input[@name='{name}']")
         return login_credentials
 
     def click_the_button(self, name):
@@ -83,7 +86,8 @@ class iFrameRelated:
 
     def click_the_button_by_value(self, text, name):
         if self.driver.find_element(by=By.XPATH, value=f"//div[@class='row text-title' and text()='{text}']"):
-            button_by_value = self.driver.find_element(by=By.XPATH, value=f"//input[@type='button' and @value='{name}']")
+            button_by_value = self.driver.find_element(by=By.XPATH,
+                                                       value=f"//input[@type='button' and @value='{name}']")
             button_by_value.click()
             sleep(2)
         else:
@@ -93,17 +97,33 @@ class iFrameRelated:
         return self.driver.find_element(by=By.XPATH,
                                         value="//div[@class='_26RadnUT54i3aZm4ePC1Ws']/child::img")
 
+
 class PageVisibility:
     def __init__(self, driver):
         self.driver = driver
 
     def wait_loading(self):
-        # self.driver.find_element(by=By.XPATH, value="//*[self::ul[@id='login_links_list'] or "
-        #                                             "self::div[@id='formsAuthenticationArea']]")
-        WebDriverWait(self.driver,15).until(EC.presence_of_all_elements_located((By.XPATH,
-        "//*[self::ul[@id='login_links_list'] or self::div[@id='formsAuthenticationArea' or @id='lightbox']]")),
-                                            message='Element has not been found')
+        WebDriverWait(self.driver, 15).until(EC.presence_of_all_elements_located((By.XPATH,
+                                                                                  "//*[self::ul[@id='login_links_list'] or self::div[@id='formsAuthenticationArea' or @id='lightbox'"
+                                                                                  "or @id='content']]")),
+                                             message='Element has not been found')
 
 
+class WebTables:
+    def __init__(self, driver):
+        self.driver = driver
 
+    def get_table_by_number(self, number):
+        table_by_number = self.driver.find_element(by=By.XPATH, value=
+        f"//div[@class='responsive-table']/table[@border='{number}']")
+        return table_by_number
+
+    def get_table_row_data(self, number):
+        trs = self.get_table_by_number(number).find_elements(by=By.XPATH, value="./tbody/tr")
+        row_dict = {}
+        for row in trs:
+            cells_1 = row.find_element(by=By.XPATH, value="./td[1]")
+            cells_2 = row.find_element(by=By.XPATH, value="./td[2]")
+            row_dict[cells_1.text] = cells_2.text
+        return row_dict
 

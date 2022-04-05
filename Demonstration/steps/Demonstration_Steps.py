@@ -184,9 +184,21 @@ def step_impl(context, text):
     tab_in_body.click()
     sleep(2)
 
-@step('Switch to iframe and go to {text}')
+@step('Switch to iframe and go to a new window for {text}')
 def step_impl(context, text):
     module = iFrameRelated(context.browser)
     module.click_link_in_iframe_body(text)
     sleep(2)
+
+@step('Verifying table {number} data on the page by comparing two dictionaries')
+def step_imp(context, number):
+    step_table = BehaveSupport.table_to_flat_dict(context.table)
+    row_dict = WebTables(context.browser).get_table_row_data(number)
+    for k, v in step_table.items():
+        if k in row_dict.keys():
+            assert str(step_table[k]).strip() == str(row_dict[k]).strip(), f'For {k}, expected value is {v},' \
+                                                 f' when actual value is {row_dict[k]}'
+        # actual_value = row_dict.get(k)
+        # print(actual_value)
+        # assert str(actual_value).strip() == str(v).strip()
 
