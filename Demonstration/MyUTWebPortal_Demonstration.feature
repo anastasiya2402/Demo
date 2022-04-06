@@ -3,7 +3,6 @@ Feature: Regression of MyUT Web Portal functionalities
 
   Background: Login to MyUT Web Portal
     Given Navigate to "myut"
-#   Given Navigate to "context.url"
     And wait for the page to load
     And Click on button Login by text in header
     Then Enter ashaban into UserName
@@ -21,11 +20,9 @@ Feature: Regression of MyUT Web Portal functionalities
       | Parent/Guest Payment               | login-elements-in-header   |
       | Welcome Anastasia Shabanskaya      | login-elements-in-header   |
       | Logout                             | login-elements-in-header   |
-      | NEW INTL STUDENT                   | body-data-elements         |
       | STUDENT                            | body-data-elements         |
       | STUDENT RESOURCES                  | body-data-elements         |
       | GRADUATE                           | body-data-elements         |
-      | INTERNATIONAL                      | body-data-elements         |
       | INACTIVE EMPLOYEE                  | body-data-elements         |
       | COVID-19 UPDATES                   | body-data-elements         |
       | UT COMMUNITY                       | body-data-elements         |
@@ -60,4 +57,20 @@ Feature: Regression of MyUT Web Portal functionalities
       | Other Programs         | Adobe Reader and VLC Media Player                                                        |
       | Warranty               | 3 years or more                                                                          |
       | Accessories            | Flash Drive, Jump Drive 8 GB or higher, cable lock, laptop carrying bag, network cable   |
+
+
+  @no_background
+  Scenario: Department of Mathematics and Statistics - Verifying that buttons in header are displayed/enabled
+    Given Open "https://www.utoledo.edu/nsm/mathstats/"
+    And wait for the page to load
+    And Verify that button Visit is enabled
+    And Verify that button Visit is displayed
+    And Verify that button Apply is enabled
+    And Verify that button Apply is displayed
+    And Verify that button Give is enabled
+    And Verify that button Give is displayed
+    And Verify that button Search is enabled
+    And Verify that button Search is displayed
+    And Verify that button Menu is enabled
+    Then Verify that button Menu is displayed
 
