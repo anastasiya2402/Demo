@@ -1,6 +1,7 @@
 from behave import step
 from Demonstration.classes.MyClass import *
 from Tables_and_Dictionaries import BehaveSupport
+from Demonstration.Base import ButtonStates
 import logging
 
 logger = logging.getLogger('master')
@@ -10,32 +11,25 @@ logger = logging.getLogger('master')
 def browser_navigation(context):
     context.browser.get(context.url)
 
-
-@step('Navigate to "{url}"')
-def browser_navigation(context, url):
-    """
-      Base web navigation
-
-      :param url:  either actual url we want go to
-      """
-
-    url = '/'.join([BehaveSupport.replace_values_by_context(context, path).strip('/') for path in url.split('/')])
-    logger.debug(f'Navigating to {url}')
+@step('Open "{url}"')
+def step_impl(context, url):
     context.browser.get(url)
-
 
 @step('wait for the page to load')
 def step_impl(context):
-    # module = MyClassLoginLinks(context.browser)
-    # module.login_links_in_header()
     module = PageVisibility(context.browser)
     module.wait_loading()
+
+
+@step('Verify that button {btn_name} is {btn_state}')
+def step_impl(context, btn_name, btn_state):
+    button = MobileMenuButtons(context.browser).get_buttons_in_header(btn_name)
+    assert ButtonStates.check_element_state(button, btn_state), f'Button {btn_name} is not {btn_state}'
 
 @step('Verify that {text} is present')
 def step_impl(context, text):
     module = MyClassLoginLinks(context.browser)
     assert text in module.login_links_text(), f"Expected name '{text}' is not present!"
-
 
 @step('Page title should be "{text}"')
 def step_impl(context,text):
@@ -48,18 +42,15 @@ def step_impl(context,text):
     print(context.browser.current_url)
     print(page_title)
 
-
 @step('Click on button {name} by text in header')
 def step_impl(context, name):
     module = MyClassHeader(context.browser)
     module.click_the_button_in_header(name)
 
-
 @step('Click on button {name} by text')
 def step_impl(context, name):
     module = LoginArea(context.browser)
     module.click_the_button(name)
-
 
 @step('If {text} is asked, then click button "{name}" by value')
 def step_impl(context, text, name):
@@ -72,7 +63,6 @@ def step_impl(context, initials):
     initials_xpath = module.email_box_verification(initials)
     assert initials in initials_xpath.get_attribute('alt'), f'{initials} is not shown or incorrect'
 
-
 @step('Enter {text} into {name}')
 def step_impl(context, text, name):
     module = LoginArea(context.browser)
@@ -80,7 +70,6 @@ def step_impl(context, text, name):
     ActionChains(context.browser).move_to_element(element). \
         click(on_element=element).send_keys(text).perform()
     sleep(2)
-
 
 @step('Verify that following buttons/links/texts are displayed')
 def fieldof_type_is_displayed(context):
@@ -198,7 +187,3 @@ def step_imp(context, number):
         if k in row_dict.keys():
             assert str(step_table[k]).strip() == str(row_dict[k]).strip(), f'For {k}, expected value is {v},' \
                                                  f' when actual value is {row_dict[k]}'
-        # actual_value = row_dict.get(k)
-        # print(actual_value)
-        # assert str(actual_value).strip() == str(v).strip()
-

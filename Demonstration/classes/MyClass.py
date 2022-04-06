@@ -104,9 +104,8 @@ class PageVisibility:
 
     def wait_loading(self):
         WebDriverWait(self.driver, 15).until(EC.presence_of_all_elements_located((By.XPATH,
-                                                                                  "//*[self::ul[@id='login_links_list'] or self::div[@id='formsAuthenticationArea' or @id='lightbox'"
-                                                                                  "or @id='content']]")),
-                                             message='Element has not been found')
+        "//*[self::ul[@id='login_links_list'] or self::div[@id='formsAuthenticationArea' or @id='lightbox'"
+        "or @id='content' or @class='mainMenuGrid']]")), message='Element has not been found')
 
 
 class WebTables:
@@ -126,4 +125,19 @@ class WebTables:
             cells_2 = row.find_element(by=By.XPATH, value="./td[2]")
             row_dict[cells_1.text] = cells_2.text
         return row_dict
+
+
+class MobileMenuButtons:
+    def __init__(self, driver):
+        self.driver = driver
+        self.mobile_grid = self.driver.find_element(by=By.XPATH, value="//div[@class='mainMenuGrid']")
+
+    def get_buttons_in_header(self, name):
+        button = self.mobile_grid.find_elements(by=By.XPATH,
+        value=f"following-sibling::div/span[text()='{name}']")
+        button.extend(self.mobile_grid.find_elements(by=By.XPATH, value=f"descendant::a[text()='{name}']"))
+        button.extend(self.mobile_grid.find_elements(by=By.XPATH, value=f"descendant::img[@alt='{name}']"))
+        assert button, f'Button {name} was not found'
+        button = button[0]
+        return button
 
