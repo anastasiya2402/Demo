@@ -124,10 +124,24 @@ class WebTables:
             cells_1 = row.find_element(by=By.XPATH, value="./td[1]")
             cells_2 = row.find_element(by=By.XPATH, value="./td[2]")
             row_dict[cells_1.text] = cells_2.text
+        print(row_dict)
         return row_dict
 
 
-class MobileMenuButtons:
+    def get_table_column_data(self, number, j):
+        trs = self.get_table_by_number(number).find_elements(by=By.XPATH, value="./tbody/tr")
+        print(len(trs))
+        cells_1 = self.get_table_by_number(number).find_elements(by=By.XPATH, value="./tbody/tr[1]/td")
+        print(len((cells_1)))
+        column_dict = {}
+        for i in range(0, len(cells_1)):
+           # if int(j) < len(trs)+1:
+              cells= self.get_table_by_number(number).find_elements(by=By.XPATH, value=f"./tbody/tr[{j}]/td")
+              column_dict[cells_1[i].text] = cells[i].text
+        print(column_dict)
+        return column_dict
+
+class MainMenuButtons:
     def __init__(self, driver):
         self.driver = driver
         self.mobile_grid = self.driver.find_element(by=By.XPATH, value="//div[@class='mainMenuGrid']")
