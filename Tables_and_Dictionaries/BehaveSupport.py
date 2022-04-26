@@ -64,6 +64,21 @@ def table_column_to_list_of_dicts(table):
     result = []
     for row in table.rows:
         result.append(dict(row.items()))
+    print(result)
+    return result
+
+
+def table_columns_to_dicts(table):
+    """
+    return dict in the grouping format specified below:
+
+    {'Head1': 'Cell1_1', 'Head2': 'Cell1_2',
+     'Head1': 'Cell2_1', 'Head2': 'Cell2_2',...}
+    """
+    result = {}
+    for i in range(0, len(table.headings)):
+        for row in table.rows:
+            result[table.headings[i]] = row.cells[i]
     return result
 
 
@@ -78,7 +93,7 @@ def table_to_flat_dict(table):
 
     if len(table.headings) < 2:
         raise ValueError('Too few columns to construct flat dictionary. Expected 2')
-    result = {table.headings[0]:table.headings[1]}
+    result = {table.headings[0]: table.headings[1]}
     for row in table.rows:
         result[row.cells[0]] = row.cells[1]
     return result
@@ -104,9 +119,9 @@ def table_to_dict_with_lists(table):
 
     if len(table.headings) < 2:
         raise ValueError('Too few columns to construct flat dictionary. Expected 2')
-    result = {table.headings[0]: sorted(table.headings[1].split('; '),  key=str.casefold)}
+    result = {table.headings[0]: sorted(table.headings[1].split('; '), key=str.casefold)}
     for row in table.rows:
-        result[row.cells[0]] = sorted(row.cells[1].split('; '),  key=str.casefold)
+        result[row.cells[0]] = sorted(row.cells[1].split('; '), key=str.casefold)
     return result
 
 
@@ -172,5 +187,3 @@ def convert_context_variables_in_scenario_outline_example_tables(context, featur
                 for r in range(len(feature.scenarios[s].examples[e].table.rows)):
                     feature.scenarios[s].examples[e].table.rows[r].cells = \
                         get_context_vars(context, feature.scenarios[s].examples[e].table.rows[r].cells)
-
-
