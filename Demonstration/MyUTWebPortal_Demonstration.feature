@@ -79,7 +79,7 @@ Feature: Regression of MyUT Web Portal functionalities
    Given Choose tab "Student"
    Then Switch to iframe and go to a new window for Student Software
    And wait for the page to load
-   Then Verifying table 0 data on the page by comparing two vertical dictionaries consisting of 1st and 2nd row
+   Then Verifying table 0 data by comparing two vertical dictionaries consisting of 1st and 2nd row
       |ADOBE                       |OFFICE 365                   |ENTERPRISE                     |THIRD PARTY                 |
       |Https:\\Software.Utoledo.Edu|Https:\\Office365.Utoledo.Edu|Https:\\Myutaccount.Utoledo.Edu|Https:\\Utoledo.Onthehub.Com|
 #      | Memory                 | 8GB RAM or more (8GB is preferred)                                                       |
