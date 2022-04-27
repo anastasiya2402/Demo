@@ -1,5 +1,4 @@
 FROM ubuntu
-FROM --platform=linux/amd64 python:3.8.6
 MAINTAINER Anastasia
 
 #USER root
