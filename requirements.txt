@@ -91,7 +91,7 @@ tzlocal==2.1
 uritemplate==3.0.1
 urllib3==1.25.11
 pdfminer==20191125
-jinja2==2.10.1
+jinja2==3.1.1
 xlrd==2.0.1
 Levenshtein==0.18.1
 py-expression-eval==0.3.14
