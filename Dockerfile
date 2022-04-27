@@ -37,7 +37,7 @@ RUN apt-get update && \
     update-ca-certificates -f;
 
 # install numpy for python
-RUN apt-get install python-numpy -y
+#RUN apt-get install python-numpy -y
 
 # Setup JAVA_HOME
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
