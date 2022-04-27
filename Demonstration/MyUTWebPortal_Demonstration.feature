@@ -82,16 +82,4 @@ Feature: Regression of MyUT Web Portal functionalities
    Then Verifying table 0 data by comparing two vertical dictionaries consisting of 1st and 2nd row
       |ADOBE                       |OFFICE 365                   |ENTERPRISE                     |THIRD PARTY                 |
       |Https:\\Software.Utoledo.Edu|Https:\\Office365.Utoledo.Edu|Https:\\Myutaccount.Utoledo.Edu|Https:\\Utoledo.Onthehub.Com|
-#      | Memory                 | 8GB RAM or more (8GB is preferred)                                                       |
-#      | Hard Drive             | 256 GB or more (256 GB or higher SSD drives are preferred)                               |
-#      |Wireless Card (laptops) | Wireless cards 802.11 ac or ax (Intel cards are preferred)                               |
-#      | Operating System       | Windows 10, or Mac OS 10.12 or higher                                                    |
-#      | Software Packages      | Microsoft Office 365, Office 2019, Microsoft Office for Mac 365, or 2019, and Open Office|
-#      | Anti-virus Software    |Microsoft Windows Defender, (already installed with Windows 10) McAfee, Norton, or AVG    |
-#      | Web Browsers           | Chrome, Firefox, Edge, Internet Explorer (PC only) or Safari (Apple only)                |
-#      |Anti-Spyware/Anti-Adware| Malwarebytes or Super Anti-Spyware                                                       |
-#      | Other Programs         | Adobe Reader and VLC Media Player                                                        |
-#      | Warranty               | 3 years or more                                                                          |
-#      | Accessories            | Flash Drive, Jump Drive 8 GB or higher, cable lock, laptop carrying bag, network cable   |
-
 
