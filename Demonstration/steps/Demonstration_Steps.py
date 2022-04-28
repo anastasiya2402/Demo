@@ -132,7 +132,7 @@ def step_imp(context, number):
                                                  f' when actual value is {row_dict[k]}'
 
 
-@step('Verifying table {number} data on the page by comparing two vertical dictionaries consisting of 1st and {j}nd row')
+@step('Verifying table {number} data by comparing two vertical dictionaries consisting of 1st and {j}nd row')
 def step_imp(context, number, j):
     """
 
