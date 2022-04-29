@@ -75,7 +75,7 @@ Feature: Regression of MyUT Web Portal functionalities
     Then Verify that button Menu is displayed
 
 
- Scenario: Technology Support - Student Software page Verification - HTML Table - 1st and 2nd, 1st and 3rd rows
+ Scenario: Technology Support - Student Software page Verification - HTML Table - rows 1 to 5
    Given Choose tab "Student"
    Then Switch to iframe and go to a new window for Student Software
    And wait for the page to load
