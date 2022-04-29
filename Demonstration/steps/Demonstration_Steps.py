@@ -132,7 +132,7 @@ def step_imp(context, number):
                                                  f' when actual value is {row_dict[k]}'
 
 
-@step('Verifying table {number} data by comparing two vertical dictionaries consisting of 1st and {j}nd row')
+@step('Verifying table {number} data by comparing two vertical dictionaries consisting of rows 1 and {j}')
 def step_imp(context, number, j):
     """
 
@@ -146,4 +146,4 @@ def step_imp(context, number, j):
     for k, v in step_table.items():
         if k in row_dict.keys():
             assert str(step_table[k]).strip() == str(row_dict[k]).strip(), f'For {k}, expected value is {v},' \
-                                                 f' when actual value is {row_dict[k]}'
+                                                 f' when actual value is "{row_dict[k]}"'

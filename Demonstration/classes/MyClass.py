@@ -135,9 +135,8 @@ class WebTables:
         print(len((cells_1)))
         column_dict = {}
         for i in range(0, len(cells_1)):
-           # if int(j) < len(trs)+1:
-              cells= self.get_table_by_number(number).find_elements(by=By.XPATH, value=f"./tbody/tr[{j}]/td")
-              column_dict[cells_1[i].text] = cells[i].text
+            cells = self.get_table_by_number(number).find_elements(by=By.XPATH, value=f"./tbody/tr[{j}]/td")
+            column_dict[cells_1[i].text] = cells[i].text
         print(column_dict)
         return column_dict
 

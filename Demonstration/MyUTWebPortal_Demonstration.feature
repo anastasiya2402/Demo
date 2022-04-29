@@ -75,11 +75,20 @@ Feature: Regression of MyUT Web Portal functionalities
     Then Verify that button Menu is displayed
 
 
- Scenario: Technology Support - Student Software page Verification - HTML Table
+ Scenario: Technology Support - Student Software page Verification - HTML Table - rows 1 to 5
    Given Choose tab "Student"
    Then Switch to iframe and go to a new window for Student Software
    And wait for the page to load
-   Then Verifying table 0 data by comparing two vertical dictionaries consisting of 1st and 2nd row
+   And Verifying table 0 data by comparing two vertical dictionaries consisting of rows 1 and 2
       |ADOBE                       |OFFICE 365                   |ENTERPRISE                     |THIRD PARTY                 |
       |Https:\\Software.Utoledo.Edu|Https:\\Office365.Utoledo.Edu|Https:\\Myutaccount.Utoledo.Edu|Https:\\Utoledo.Onthehub.Com|
+   Then Verifying table 0 data by comparing two vertical dictionaries consisting of rows 1 and 3
+      |ADOBE             |OFFICE 365 |ENTERPRISE     |THIRD PARTY     |
+      |Adobe Acrobat ($) |Excel      |AntiVirus Info |Windows 10 ($)  |
+   And Verifying table 0 data by comparing two vertical dictionaries consisting of rows 1 and 4
+      |ADOBE                    |OFFICE 365 |ENTERPRISE            |THIRD PARTY      |
+      |Adobe Creative Suite ($) |One Drive  |Eduroam Wireless Info |Mind Manager ($) |
+   Then Verifying table 0 data by comparing two vertical dictionaries consisting of rows 1 and 5
+      |ADOBE |OFFICE 365 |ENTERPRISE |THIRD PARTY    |
+      |      |Outlook    |EndNote    |Norton 360 ($) |
 
