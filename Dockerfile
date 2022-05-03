@@ -1,8 +1,6 @@
 FROM ubuntu
 MAINTAINER Anastasia
 
-#USER root
-
 # set noninteractive installation
 RUN export DEBIAN_FRONTEND=noninteractive
 
